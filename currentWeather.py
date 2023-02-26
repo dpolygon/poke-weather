@@ -4,9 +4,7 @@ import json
 import geocoder
 import cv2
 import numpy as np
-
-# Enter your API key here
-api_key = "0d3857c5be04637aa61485b98221a19a"
+import config
 
 # base_url variable to store url
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
@@ -18,7 +16,7 @@ city_name = geodata['city']
 
 # complete_url variable to store
 # complete url address
-city_data_request = base_url + "appid=" + api_key + "&q=" + city_name
+city_data_request = base_url + "appid=" + config.weather_key + "&q=" + city_name
 
 # get method of requests module
 # return response object

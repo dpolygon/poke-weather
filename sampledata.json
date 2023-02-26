@@ -1,44 +1,4 @@
 {
-    "coord": {
-        "lon": -97.7431,
-        "lat": 30.2672
-    },
-    "weather": [
-        {
-            "id": 804,
-            "main": "Clouds",
-            "description": "overcast clouds",
-            "icon": "04d"
-        }
-    ],
-    "base": "stations",
-    "main": {
-        "temp": 299.11,
-        "feels_like": 299.11,
-        "temp_min": 298.47,
-        "temp_max": 300,
-        "pressure": 1027,
-        "humidity": 65
-    },
-    "visibility": 10000,
-    "wind": {
-        "speed": 4.92,
-        "deg": 222,
-        "gust": 5.36
-    },
-    "clouds": {
-        "all": 100
-    },
-    "dt": 1677450636,
-    "sys": {
-        "type": 2,
-        "id": 2073627,
-        "country": "US",
-        "sunrise": 1677416444,
-        "sunset": 1677457644
-    },
-    "timezone": -21600,
-    "id": 4671654,
-    "name": "Austin",
-    "cod": 200
+    "cod": 401,
+    "message": "Invalid API key. Please see https://openweathermap.org/faq#error401 for more info."
 }
