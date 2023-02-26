@@ -1,5 +1,9 @@
 # import required modules
-import requests, json
+import requests 
+import json
+import geocoder
+import cv2
+import numpy as np
 
 # Enter your API key here
 api_key = "0d3857c5be04637aa61485b98221a19a"
@@ -7,64 +11,58 @@ api_key = "0d3857c5be04637aa61485b98221a19a"
 # base_url variable to store url
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
+geodata = geocoder.ip('me').json
+
 # Give city name
-city_name = input("Enter city name : ")
+city_name = geodata['city']
 
 # complete_url variable to store
 # complete url address
-complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+city_data_request = base_url + "appid=" + api_key + "&q=" + city_name
 
 # get method of requests module
 # return response object
-response = requests.get(complete_url)
-
-# json method of response object
-# convert json format data into
-# python format data
-x = response.json()
-
-print(x)
+city_data = requests.get(city_data_request).json()
 
 # Now x contains list of nested dictionaries
 # Check the value of "cod" key is equal to
 # "404", means city is found otherwise,
 # city is not found
-if x["cod"] != "404":
+if city_data["cod"] == "404":
+	print("City Not Found")
+	exit()
 
-	# store the value of "main"
-	# key in variable y
-	y = x["main"]
+# store the value of "main"
+# key in variable y
+data_object = json.dumps(city_data, indent=4)
+ 
+# Writing to sample.json
+with open("sampledata.json", "w") as outfile:
+    outfile.write(data_object)
 
-	# store the value corresponding
-	# to the "temp" key of y
-	current_temperature = y["temp"]
+# store the value of "weather"
+# key in variable z
+weather_data = city_data["weather"][0]
 
-	# store the value corresponding
-	# to the "pressure" key of y
-	current_pressure = y["pressure"]
+# store the value corresponding
+# to the "description" key at
+# the 0th index of z
+weather_main = weather_data["main"]
 
-	# store the value corresponding
-	# to the "humidity" key of y
-	current_humidity = y["humidity"]
+# print following values
+print("Weather for Austin Today: " + str(weather_main))
 
-	# store the value of "weather"
-	# key in variable z
-	z = x["weather"]
+cap = cv2.VideoCapture('ezgif.com-gif-to-mp4.mp4')
 
-	# store the value corresponding
-	# to the "description" key at
-	# the 0th index of z
-	weather_description = z[0]["description"]
-
-	# print following values
-	print(" Temperature (in kelvin unit) = " +
-					str(current_temperature) +
-		"\n atmospheric pressure (in hPa unit) = " +
-					str(current_pressure) +
-		"\n humidity (in percentage) = " +
-					str(current_humidity) +
-		"\n description = " +
-					str(weather_description))
-
-else:
-	print(" City Not Found ")
+# Read until video is completed
+while(cap.isOpened()):
+      
+# Capture frame-by-frame
+    ret, frame = cap.read()
+    if ret == True:
+    # Display the resulting frame
+        cv2.imshow('Poke-weather', frame)
+          
+    # Press Q on keyboard to exit
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            break
